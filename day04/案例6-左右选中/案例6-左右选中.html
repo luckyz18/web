@@ -6,19 +6,19 @@
     <script type="text/javascript" src="../js/jquery-1.11.0.min.js" ></script>
 		<script type="text/javascript">
 			$(function(){
-				//移动一个
-				var $right = $("#right");
 				
+				//移动一个				
 				$("#toRight1").click(function(){
-					$options = $($("#left").options);
-					$options.each(function(){
-						if(this.selected){
-							$right.append($(this));
-						}
-					})
+					$("#left>option:selected:first").appendTo($("#right"));
 				})
 				//移动多个
+				$("#toRight2").click(function(){
+					$("#left>option:selected").appendTo($("#right"));
+				})
 				//全移
+				$("#toRight3").click(function(){
+					$("#left>option").appendTo($("#right"));
+				})
 			})
 		</script>
 	<style>
