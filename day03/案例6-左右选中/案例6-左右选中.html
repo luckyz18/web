@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>左右选中.html</title>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<style>
+		input[type='button']{
+			width:50px;
+		}
+	</style>
+	</head>
+	<script type="text/javascript">
+		onload = function(){
+			//移动一个  给元素派发事件
+			document.getElementById("toRight1").onclick = function(){
+				//获取左边所有元素
+				var arr = document.getElementById("left").options;
+				alert(arr);
+				//移动到右边
+				var len = arr.length;
+				for(var i=0;i<len;i++){
+					if(arr[i].selected){
+						document.getElementById("right").appendChild(arr[i]);
+						break;
+					}
+				}
+			}
+			
+			//多移  给元素派发事件
+			document.getElementById("toRight2").onclick = function(){
+				//获取左边所有元素
+				var arr = document.getElementById("left").options;
+				//移动到右边
+//				var len = arr.length;
+				for(var i=0;i<arr.length;i++){
+					if(arr[i].selected){
+						document.getElementById("right").appendChild(arr[i]);						
+						i--;
+					}
+//					console.log(arr);
+				}
+			}
+			
+			//全移
+			document.getElementById("toRight3").onclick = function(){
+				var arr = document.getElementById("left").options;
+				for(var i=0;i<arr.length;i++){
+					document.getElementById("right").appendChild(arr[i]);
+					i--;
+				}
+			}
+			
+			
+		}
+	</script>
+	<body>
+		<table>
+			<tr>
+				<td>
+					<select id="left" multiple="true" style="width:100px" size="10">
+						<option>每</option>
+						<option>天</option>
+						<option>都</option>
+						<option>是</option>
+						<option>崭</option>
+						<option>新</option>
+						<option>的</option>
+						<option>呀</option>
+					</select>
+				</td>
+				<td>
+					<input type="button" value=">" id="toRight1"><br>
+					<input type="button" value=">>" id="toRight2"><br>
+					<input type="button" value=">>>" id="toRight3"><br><br>
+					<input type="button" value="<" id="toLeft1"><br>
+					<input type="button" value="<<" id="toLeft2"><br>
+					<input type="button" value="<<<" id="toLeft3">
+				</td>
+				<td>
+					<select id="right" multiple="true" style="width:100px" size="10">
+						
+					</select>
+				</td>
+			</tr>
+		</table>
+	</body>
+
+</html>
+
+
+
+
+
+

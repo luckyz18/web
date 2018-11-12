@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			var s = "hello！";
+//			var DivObj;
+			var i=0;
+			
+			function init(){
+//				DivObj = document.getElementById("divId");  //???一样的效果
+				setInterval(show,200);
+			}
+			function show(){
+				var DivObj = document.getElementById("divId");
+				i++;
+				s_ = s.substring(0,i);
+				DivObj.innerHTML=s_;   //????
+				if (i==s.length)
+					i=0;	
+			}
+			
+		</script>
+	</head>
+	<body onload ="init()" >
+		<div id="divId">
+			
+		</div>
+	</body>
+</html>

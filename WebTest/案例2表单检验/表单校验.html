@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript">
+			function init(){
+				document.getElementById("btn").onclick = btnObj;
+			}
+			function checkForm(){
+				var userNameObj = document.getElementById("username");
+				var userName = userNameObj.value;
+				var passWordObj  = document.getElementById("password");
+				var password = passWordObj.value;
+				if(userName ==null || userName==""){
+					alert("用户名不能为空");
+					return false;
+				}
+				if(password==null || password==""){
+					alert("密码不能为空");
+					return false;
+				}
+				
+			}
+			var btnObj = function(){
+				alert("hhh");
+			}
+			
+		</script>
+	</head>
+	<body onload="init()">
+		<form action="#" method="get" onsubmit="return checkForm()">
+			姓名：<input name="username" id="username"/><br>
+			密码：<input type="password" name="password" id="password"/><br>
+			<input type="submit" name="submit" id="submit" value="提交" />
+			<input type="reset" name="reset" id="reset" value="重置" /><br />
+			
+			<input type="button" name="btn" id="btn" value="按钮" />
+		</form>
+		
+	</body>
+	
+</html>
