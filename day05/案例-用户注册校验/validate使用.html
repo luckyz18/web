@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="../js/jquery-1.11.0.js" ></script>
+		<!--validate校验库-->
+		<script type="text/javascript" src="../js/jquery.validate.js" ></script>
+		<!--国际化库，中文提示-->
+		<script type="text/javascript" src="../js/messages_zh.js" ></script>
+		<script type="text/javascript">
+			$(function(){
+				$("#formId").validate({
+					rules:{
+						
+						//字段的  name属性："校验器"  单个
+						/*
+						 * 多个
+						 * 字段的  name属性：{
+						           校验器:"值",
+							 校验器2:"值2"
+						   }
+						*/ 
+						username:"required",
+						password:{
+							required:true,    //true 数字  不用加“ ”
+							number:true,
+						},
+						repassword:{
+							equalTo: "[name = 'password']"    //jq表达式
+						},
+						zuixiaozhi:{
+							min:5,
+						},
+						shuzhiqujian:{
+							range:[5,10]
+						}
+					},
+					messages:{
+						
+						//字段的  name属性："提示信息"  单个
+						/*
+						 * 多个
+						 * 字段的  name属性：{
+						           校验器:"提示信息",  
+							 校验器2:"提示信息2"
+						   }
+						*/ 
+						username:"用户名不空",
+						password:{
+							required:"密码不空",
+							number:"密码由数字组成",
+						},
+						repassword:{
+							equalTo: "两次输入不一致"
+						},
+						zuixiaozhi:{
+							min:"最小值不小于{0}"
+						},
+						shuzhiqujian:{
+							range:"值区间在{0}-{1}之间",
+						}
+					}
+				});
+			})
+		</script>
+	</head>
+	<body> 
+		<form id="formId" action="">
+			必填：<input type="text" name="username"/> <br/>
+			必填数字：<input type="text" name="password"/> <br />
+			必填重复：<input type="text" name="repassword"/> <br />
+			最小值：<input type="text" name="zuixiaozhi"/> <br />
+			区间：<input type="text" name="shuzhiqujian"/> <br />
+			<input type="submit" value="提交"/>
+		</form>
+	</body>
+</html>
