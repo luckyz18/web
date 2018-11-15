@@ -5,9 +5,72 @@
 		<meta charset="UTF-8">
 		<title></title>
 	</head>
-	
+	<script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
+	<<script type="text/javascript" src="../js/jquery.validate.js" ></script>
+	<script type="text/javascript" src="../js/messages_zh.js" ></script>
 	<script>
-		
+		$(function(){
+			$("#formid").validate({
+				rules:{
+					username:"required",
+					password:{
+						required:true,
+						minlength:6,
+						
+					},
+					repassword:{
+						equalTo:"[name = 'password']"
+					},
+					email:{
+						required:true,
+						email:true,
+					},
+					name:"required",
+					sex:{
+						required:true
+					},
+					birthday:{
+						date:true
+					},
+					checkcode:{
+						required:true,
+						minlength:6,
+						maxlength:6
+					},
+					
+				},
+			
+				messages:{
+					username:"用户名不为空",
+					password:{
+						required:"密码不空",
+					},
+					repassword:{
+						equalTo:"两次输入密码不一致"
+					},
+					email:{
+						required:"邮箱不可以为空",
+						email:"邮箱格式不正确",
+					},
+					name:"姓名不为空",
+					sex:{
+						required:"请选择性别"
+					},
+					// birthday:{
+						// date:true
+					// },
+					checkcode:{
+						required:"验证码不为空",
+						minlength:"长度为6",
+						maxlength:"长度为6"
+					},
+					
+					
+					
+					
+				}
+			});
+		})
 	</script>
 	<style>
 		
@@ -44,6 +107,7 @@
 						<input type="radio" name="sex" value="男"> 男
 						<input type="radio" name="sex" value="女" />女
 						<!--<label for="sex" class="error"></label>-->
+						<label for="sex" class="error"></label>
 					</td>
 				
 				</tr>
