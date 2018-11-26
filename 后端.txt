@@ -360,27 +360,30 @@
 				WHERE `user`.id=tmp.user_id
 4.	JDBC 
 		java操作数据库，一套接口，
-		驱动，（jdbc的实现类)
+		驱动----->（jdbc的一套实现类 由数据库厂商提供)
 		jdbc作用：
 			连接数据库
 			发送sql语句
 			处理结果
 		jdbc操作步骤：
-			1.数据库和表
-			2.创建一个项目
-			3.导入驱动jar 包
-			4.编码：
-				注册驱动
-				获取连接
+			1.导入驱动jar 包（驱动）
+			2.注册驱动 
+				Class.forname("com.mysql.jdbc.driver")
+			3.	获取连接
 					有时候出现中文字符问题：
 					Connection conn =DriverManager.getConnection("jdbc:mysql://localhost:3306/day07?useUnicode=true&characterEncoding=utf8", "root", "123456");
 					或者已经将my.ini修改 修改好了
-				编写sql
-				创建预编译的语句执行者
-				设置参数
-				执行sql
-				处理结果
-				释放资源
+			4.编写sql
+			5.创建语句执行者
+			PreparedStatement st = conn.prepareStatement(sql)
+			6.设置参数
+				st.setXXX()
+			7.执行sql
+				ResultSet rs= st.execuQuery();
+				int i = st.execuUpadate()
+			8.处理结果
+				if(rs.next()) re.getXXX(int | string)
+			9.释放资源
 				
 	案例1-通过jdbc 完成单表的crud操作
 		IDE设置；
@@ -498,7 +501,8 @@
 			
 			获取连接的方法：
 				Connection	getConnection()
-			归还连接的方法就是 释放资源的方法，调用 connection.close();
+			归还连接的方法就是 释放资源的方法，
+				Conn.close();
 			
 			
 		常用的连接池：
@@ -576,7 +580,7 @@
 				常用方法：
 					query() r操作
 					update()  cud操作 在update里可以找到？设置参数的方法
-			Dbutils: 释放资源  控制事务
+			Dbutils: 类 释放资源  控制事务
 				closeQuietly(conn):内部处理了异常
 				commitAndClose(Connection conn): 提交事务 并释放连接
 			ResultSetHandler:封装结果集  接口  查询
@@ -592,6 +596,118 @@
 					❤ScalarHandler：针对于聚合函数 例如 count() 返回long值
 						：map.getClass().getName() 可以返回map类型 
 
-						
-						
-						
+9.	xml:
+		可扩展的标签语言
+		标签自定义
+		作用：存储数据 （配置文件）
+		书写规范：
+			1.区分大小写
+			2.必须有一个根标签			
+			3.标签必须关闭
+				<xx></xx>
+				<xx/>
+			4.属性必须用引号引起来
+				<xx att="value"/>
+			5.标签体中的空格或者换行或者制表符等内容都是作为数据存在的
+			6.特殊字符必须转义   <  >  &
+			满足以上规范的文件称之为是一个格式良好的xml文件  可以通过浏览器浏览
+		后缀名 .xml
+		组成：
+			声明：第一行 顶格写
+			元素（标签）：
+				<xx></xx>
+				<xx/>
+				要求：
+					1.必须关闭
+					2.标签名中不能 xml Xml XML 等开头
+					3.标签名不能出" " 和:等特殊字符
+					
+			属性：
+				格式：
+				<xx 属性名="属性值"></xx> 
+				属性必须用引号引起来
+			注释:<!-- -->
+			CDATA:
+				xml文件特殊字符必须转义  
+					1.---------三部分 例如<a> 写为  &lt;a&gt; 
+					2.<![CDATA[ 可以原样输出的。。。。。]]>	
+		
+		xml解析：
+			解析方式：
+				1.sax 逐行解析 只能查询
+				2.dom 一次性将文档加载到内存 形成dom树 可以对dom树进行crud
+			解析技术：			
+			  常见的解析开发包：
+			  JAXP：sun公司提供支持DOM和SAX开发包
+			  JDom：dom4j兄弟
+			  jsoup：一种处理HTML特定解析开发包
+			    ❤dom4j：比较常用的解析开发包，hibernate底层采用。
+				
+			dom4j技术进行查询操作：
+				使用步骤：
+					1.导入jar包
+					2.创建一个核心对象 SAXReader
+						new SAXReader
+					3.将xml文档加载到内存中形成一颗树
+						Document doc=reader.read(文件名)
+					4.获取根节点
+						Element root = doc.getRootElement();
+					5.通过根节点就可以获取其他节点（文本节点 属性节点 元素节点）
+						获取所有子元素
+							List<Element> list = root.elements()
+						获取元素的指定属性内容
+							String value = root.attributeValue("属性名")
+						获取子标签标签体 ：遍历list 获取到每一个子元素
+							String text = ele.elementText("子标签名称")
+				缺点是 若想找到一个嵌套深的 则需要一步步获取	 
+					
+			xpath 解析技术：
+				依赖于dom4j
+				使用步骤：
+					1.导入jar包(dom4j 和 jaxen-1.1-beta-6.jar)
+					2.加载文件到内存
+					3.使用API
+						selectNode("表达式")
+						selectSingleNode("表达式")
+				表达式的写法：
+				  /  从根节点选取。
+				  //  从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置
+				  获取属性的值：
+					例如 //AAA[@属性名="属性值"]
+					
+				
+					
+					
+					
+					
+					
+10.	案例1-编写配置文件 编写一个服务器软件 按照指定的全限定名 根据路径 让服务器创建这个对象，调用指定的方法
+	解析xml
+	通过全限定名创建一个对象 调用方法 ----------反射
+	
+11.	反射
+	1.获取对应的class对象
+		方式1：❤
+			Class clazz = Class.forname("全限定名")
+		方式2：
+			Class clazz = 类名.Class();
+		方式3：
+			Class clazz = 对象.getClass();
+		{
+			Class类也是类的一种，与class关键字是不一样的。
+			手动编写的类被编译后会产生一个Class对象，其表示的是创建的类的类型信息，而且这个Class对象保存在同名.class的文件中(字节码文件)，比如创建一个Shapes类，编译Shapes类后就会创建其包含Shapes类相关类型信息的Class对象，并保存在Shapes.class字节码文件中。
+			每个通过关键字class标识的类，在内存中有且只有一个与之对应的Class对象来描述其类型信息，无论创建多少个实例对象，其依据的都是用一个Class对象。
+
+			Class类只存私有构造函数，因此对应Class对象只能有JVM创建和加载
+			Class类的对象作用是运行时提供或获得某个对象的类型信息，这点对于反射技术很重要。
+
+		} 	
+	2.通过Class对象创建一个实例对象(相当于 new 类())
+		Object clazz.newInstance();  
+	3.通过Class 对象 获取一个方法
+		Method method = clazz.getMethod(“方法名”，Class .... param)
+			param为参数类型
+	4.让方法执行
+		method.invoke(a,10,20)
+		method.invoke(Object 实例对象，Object ...参数)  ==a
+			Object ...参数 ：该方法运行时需要的参数   ==10,20	
