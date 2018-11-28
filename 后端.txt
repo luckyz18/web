@@ -711,3 +711,150 @@
 		method.invoke(a,10,20)
 		method.invoke(Object 实例对象，Object ...参数)  ==a
 			Object ...参数 ：该方法运行时需要的参数   ==10,20	
+			
+12.	xml约束：
+		作用：规定xml中可以出现哪些元素及哪些属性 ，以及出现的顺序。
+		约束的分类：
+			DTD约束： structs hibernate
+				需要导入dtd 文件
+				和xml的关联：
+				方式1：内部关联
+					格式：
+						<!DOCTYPE 根元素名 [dtd语法]>
+						*dtd语法：
+							元素：
+								<Element 元素名称 数据类型 | 包含的内容>
+									数据类型：
+										#PCDATA 普通文本 使用的时候用（）引起来
+									包含内容：
+										该元素下可以出现哪些元素 用（）引起来
+								符号：
+									*   任意次
+									？  0或1次
+									+	至少1次
+									|	或者
+									()	分组
+									，	逗号表示顺序
+							属性：
+								格式：
+									<!ATTLIST 元素名 属性名 属性类型 属性是否必须出现>
+									属性类型：
+										ID：唯一
+										CDATA：普通文本
+									属性是否必须出现：
+										REQUIRED：必须出现
+										IMPLIED:可以不出现
+							一个xml文档只能出现一个dtd约束 
+				方式2：外部关联 系统关联
+					格式：
+						<!DOCTYPE 根元素名 SYSTEM "约束文件位置">
+				方式3：外部关联   公共关联
+					格式：
+						<!DOCTYPE 根元素名 PUBLIC "约束文件的名称" "约束文件位置">
+						 
+			SCHEMA约束： tomcat  项目 spring
+				一个xml文档能出现多个SCHEMA约束
+				和xml的关联：
+					格式：
+						<根标签 xmlns="..." ...>
+						<根标签 xmlns：别名="..." ...>
+				名称空间：
+					关联约束文件
+					规定元素是来源于哪个文件
+				例如：
+					一个约束文件中规定table （表格） 表格有属性 row col
+					另一个约束文件table （桌子） 桌子有属性 width height
+				    
+					同一个xml引入了两个table 属性？为避免这种情况 可以给其中一个约束起个别名 使用时未加别名代表来源于没有别名的约束文件
+						例：table (表格) xmlns:a="..."
+							a:table
+					xml 只有一个不起别名
+				注意：
+					SCHEMA约束本身也是一个xml文件
+				
+	关于xml掌握：
+		根据约束写出name value 属性即可 ，知道标签出现的位置
+		Alt+/ 或者 F2 提示写出内容即可
+13.	案例2-通过eclispe发布自己的项目
+		eclispe
+		tomcat :服务器
+		web 项目
+		////////////////////////////////////////////////
+		服务器分类：硬件服务器 和 软件服务器
+		web 服务器：提供资源供别人访问
+		web ： 网页 资源
+		web资源分类：
+			静态web: html css ...
+			动态web: servlet  jsp php .net 
+		web 通信机制：请求响应机制
+		
+		tomcat :支持servlet 和 jsp规范的服务器 	
+			配置：
+				1.启动一闪而过  检查JAVA_HOME
+				2.端口冲突
+					修改tomcat端口号 conf server.xml 修改port后面的值就可以 1024以下留给系统用 80除外 留给HTTP用的
+				3.CATALINA_HOME可能出现 启动多个版本只能启动一个 原因配置好了。。删除
+			目录：
+				❤webapps: 存放项目的目录
+				❤work: 存放jsp文件在运行时产生的java 和 class文件
+				
+			web	项目的目录结构：❤❤❤
+				myweb（项目名称）  web 2.5版本标准的目录结构
+				|
+				|----------html css js  image 等目录或者文件
+				|
+				|----------WEB-INF(特点：通过浏览器直接访问不到 目录)
+				|				|
+				|				|-------lib(项目第三方jar包)
+				|				|-------classes(存放的是我们自定义的java 文件生成的.class文件)
+				|				|-------web.xml(当前项目的核心配置文件)
+				|				|
+				|
+				访问路径：
+					http://主机：端口号/项目名称/资源路径
+			项目发布方式：（虚拟目录映射）
+				❤1.项目放到tomcat/webapps下
+				**2.server.xml修改
+					host标签下，添加如下代码
+						<Context path = "/项目名称" docBase = "项目目录"/>
+				**3. tomcat/conf/引擎目录/主机目录下 新建一个xml文件
+					文件名就是项目名  文件内容：<Context docBase ="G:..."/>
+			//////////////////////////////////////////////////
+			eclispe和tomcat整合 ❤❤❤
+				day08doc参考
+				修改eclispe的servers 
+			通过eclispe 发布项目：
+				1.创建一个项目 （动态的web项目）
+				2.web版本2.5
+				3.java 文件在src 
+					网页图片在webContent下
+				4.发布项目
+				
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
